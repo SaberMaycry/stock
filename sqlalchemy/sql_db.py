@@ -65,26 +65,45 @@ def get_clear_popularity_data():
 
 def get_clear_jetton_data():
     # 查询所有热度记录
-    jetton_list = session.query(Jetton).filter(Jetton.date == MONTH_DAY, Jetton.name == '广和通')
+    # jetton_list = session.query(Jetton).filter(Jetton.date == MONTH_DAY, Jetton.name == '广和通')
+    # jetton_list = session.query(Jetton).filter(Jetton.name == '广和通')
+
+    temp_date = '05-20'
+
+    jetton_list = session.query(Jetton).filter(Jetton.date == temp_date, Jetton.name == '广和通')
+    # 将热度对象列表，转化为二位数组
+    arr = []
     for item in jetton_list:
-        print(item.id, item.date, item.name, item.code, item.jeton, item.price)
-    # # 将热度对象列表，转化为二位数组
-    # arr = []
-    # for item in jetton_list:
-    #     arr.append([item.id, item.date, item.name, item.code, item.jeton, item.price])
-    # # 利用二维数组生产pandas数据帧
-    # df = pd.DataFrame(arr, columns=['id', 'date', 'name', 'code', 'jeton', 'price'])
-    # print(len(df))
-    # # 去除id列
-    # df = df.drop('id', axis=1)
-    # # 去除重复项
-    # jetton_data = df[-df.duplicated()]
-    # print(len(jetton_data))
-    # # print(jetton_data)
-    #
-    # # jetton_data.to_csv(JETTON_FILE_NAME)
-    # print(JETTON_FILE_NAME)
-    # # session.add_all()
+        arr.append([item.id, item.date, item.name, item.code, item.jeton, item.price])
+    # 利用二维数组生产pandas数据帧
+    df = pd.DataFrame(arr, columns=['id', 'date', 'name', 'code', 'jeton', 'price'])
+    # 去除id列
+    df = df.drop('id', axis=1)
+    # 去除重复项
+    jetton_data = df[-df.duplicated()]
+
+    # 转换类对象的数据类型
+    jetton_data.jeton = jetton_data.jeton.astype(float)
+    jetton_data.price = jetton_data.price.astype(float)
+    # 筹码总和
+    jetton_total = 0
+    for i in range(len(jetton_data)):
+        jetton_total += jetton_data.jeton[i] * jetton_data.price[i]
+
+    percentage_list = []
+    for i in range(len(jetton_data)):
+        jetton = jetton_data.jeton[i]
+        price = jetton_data.price[i]
+        # 百分比
+        percentage = jetton * price / jetton_total * 100
+        percentage_list.append(percentage)
+
+    jetton_data['percentage'] = percentage_list
+
+    print(jetton_data)
+    # jetton_data.to_csv(JETTON_FILE_NAME)
+    jetton_data.to_csv('data/jetton/' + temp_date + '.csv')
+    # session.add_all()
     # # 用完记得关闭，也可以用with
     # session.close()
 
