@@ -21,7 +21,8 @@ def start_timer_job():
         # 定时任务
         scheduler = BlockingScheduler()
         trigger = CronTrigger(day_of_week='tue-sat',  # 周二到周六
-                              hour='6,20',  # 每天早上6点，晚上8点
+                              hour='6',  # 每天早上6点，晚上8点
+                              # hour='6,20',  # 每天早上6点，晚上8点
                               # minute='0-59', # 每分钟
                               # second='*/2' # 每隔两秒
                               )
@@ -35,5 +36,5 @@ def start_timer_job():
 
 
 if __name__ == '__main__':
-    # start_timer_job()
-    job()
+    start_timer_job()
+    # job()
