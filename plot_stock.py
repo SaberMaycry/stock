@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 mpl.rcParams['font.sans-serif'] = ['SimHei']  # 指定默认字体：解决plot不能显示中文问题
 mpl.rcParams['axes.unicode_minus'] = False  # 解决保存图像是负号'-'显示为方块的问题
 
-file_name = '05-28'
+file_name = '05-30'
 
 df_jetton = pd.read_csv('sqlalchemy\\data\\jetton\\' + file_name + '.csv', header=1)
 
