@@ -10,10 +10,15 @@ from tbl_jeton import Jetton
 from tbl_popularity import Popularity
 from tbl_stock_data import StockDetail
 
+import plot_stock as ps
+
+db_name = 'stock'
+# db_name = 'saber'
+
 # mysqlclient 驱动
-MYSQLDB_CONNECT_STRING = 'mysql+mysqldb://root:qqq111@localhost/saber?charset=utf8mb4&binary_prefix=true'
+MYSQLDB_CONNECT_STRING = 'mysql+mysqldb://root:qqq111@localhost/' + db_name + '?charset=utf8mb4&binary_prefix=true'
 # PyMySQL 驱动
-PYMYSQL_CONNECT_STRING = 'mysql+pymysql://root:qqq111@localhost/saber?charset=utf8mb4&binary_prefix=true'
+PYMYSQL_CONNECT_STRING = 'mysql+pymysql://root:qqq111@localhost/' + db_name + '?charset=utf8mb4&binary_prefix=true'
 # 当前日期
 CURRENT_DATE = './data/' + datetime.now().strftime('%Y-%m-%d')
 MONTH_DAY = datetime.now().strftime('%m-%d')
@@ -63,12 +68,10 @@ def get_clear_popularity_data():
     session.close()
 
 
-def get_clear_jetton_data():
+def get_clear_jetton_data(name, date):
     # 查询所有热度记录
-    temp_name = '京东方A'
-    temp_date = '05-28'
 
-    jetton_list = session.query(Jetton).filter(Jetton.name == temp_name, Jetton.date == temp_date)
+    jetton_list = session.query(Jetton).filter(Jetton.name == name, Jetton.date == date)
     # 将热度对象列表，转化为二位数组
     arr = []
     for item in jetton_list:
@@ -96,9 +99,12 @@ def get_clear_jetton_data():
     # 添加百分比列
     jetton_data['percentage'] = percentage_list
 
-    print(jetton_data)
+    # print(jetton_data)
     # jetton_data.to_csv(JETTON_FILE_NAME)
-    jetton_data.to_csv('data/jetton/' + temp_name + temp_date + '.csv')
+
+    jetton_file_path = 'data/jetton/{0}{1}.csv'.format(name, date)
+
+    jetton_data.to_csv(jetton_file_path)
     # session.add_all()
     # # 用完记得关闭，也可以用with
     # session.close()
@@ -130,4 +136,9 @@ def get_clear_stock_data():
 
 if __name__ == '__main__':
     # get_clear_popularity_data()
-    get_clear_jetton_data()
+
+    name = '中通客车'
+    date = '06-03'
+
+    get_clear_jetton_data(name, date)
+    # ps.plot_stock(name, date)

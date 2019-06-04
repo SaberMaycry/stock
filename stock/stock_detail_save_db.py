@@ -25,7 +25,7 @@ def get_flush_data(code):
             }
 
             page = requests.request("GET", url, headers=headers)
-            sleep_random(100, 200)  # 程序休眠100~200毫秒
+            sleep_random(50, 100)  # 程序休眠100~200毫秒
             return json.loads(page.text)
         except:
             print("Connection refused by the server..")
