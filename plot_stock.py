@@ -21,8 +21,11 @@ def plot_stock(name, date):
     # print(df_jetton)
 
     # df_jetton.query('percentage>20 & age<40')
-    query = df_jetton.query('percentage>1')
-    print(query)
+    # query = df_jetton.query('percentage>1')
+    # query = df_jetton.query('percentage>0.5')
+    # query = df_jetton.query('percentage>0.1')
+    # print(query)
+    print(df_jetton)
 
     # 类型转换
     df_jetton.price = df_jetton.price.astype(float)
