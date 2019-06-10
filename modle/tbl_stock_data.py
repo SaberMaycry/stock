@@ -12,7 +12,6 @@ class StockDetail(Base):
     stock_name = Column('stock_name', String(20))
     cost_avg = Column('cost_avg', String(20))
     close_price = Column('close_price', String(20))
-    price = Column('price', String(20))
     distribution_desc = Column('distribution_desc', String(20))
     max_price = Column('max_price', String(20))
     min_price = Column('min_price', String(20))

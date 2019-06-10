@@ -12,4 +12,5 @@ if __name__ == '__main__':
     # su.get_clear_jetton_data(name, date)
     # pu.plot_stock(name, date)
 
-    su.get_clear_popularity_data(name, date)
+    # su.get_clear_popularity_data(name, date)
+    su.get_clear_stock_data(name, date)

@@ -23,7 +23,6 @@ PYMYSQL_CONNECT_STRING = 'mysql+pymysql://root:qqq111@localhost/' + db_name + '?
 CURRENT_DATE = './data/' + datetime.now().strftime('%Y-%m-%d')
 MONTH_DAY = datetime.now().strftime('%m-%d')
 
-
 # 创建数据库引擎，选择上述引擎类型，echo为True,会打印所有的sql语句
 engine = create_engine(PYMYSQL_CONNECT_STRING, echo=True)
 
@@ -44,7 +43,7 @@ def get_clear_popularity_data(name, date):
     # 查询热度记录
     popularity_list = session.query(Popularity).filter(Popularity.name == name)
 
-    # 将热度对象列表，转化为二位数组
+    # 将对象列表，转化为二位数组
     arr = []
     for item in popularity_list:
         arr.append([item.id, item.date, item.name, item.code, item.diff, item.ranking, item.total])
@@ -70,7 +69,7 @@ def get_clear_jetton_data(name, date):
     # 查询筹码记录
 
     jetton_list = session.query(Jetton).filter(Jetton.name == name, Jetton.date == date)
-    # 将热度对象列表，转化为二位数组
+    # 将对象列表，转化为二位数组
     arr = []
     for item in jetton_list:
         arr.append([item.date, item.name, item.code, float(item.jeton), float(item.price)])
@@ -108,27 +107,59 @@ def get_clear_jetton_data(name, date):
 
 def get_clear_stock_data(name, date):
     # 查询股票详情记录
-    stock_detail_list = session.query(StockDetail).filter(StockDetail.name == name, StockDetail.date == date)
+    stock_detail_list = session.query(StockDetail).filter(StockDetail.stock_name == name)
 
-    # 将热度对象列表，转化为二位数组
+    # 将对象列表，转化为二位数组
     arr = []
     for item in stock_detail_list:
-        arr.append([item.id, item.date, item.name, item.code, item.diff, item.ranking, item.total])
+        id = item.id
+        cur_date = item.cur_date
+        stock_code = item.stock_code
+        stock_name = item.stock_name
+        cost_avg = item.cost_avg
+        close_price = item.close_price
+        distribution_desc = item.distribution_desc
+        max_price = item.max_price
+        min_price = item.min_price
+        profit_rate = item.profit_rate
+        ylw = item.ylw
+        zcw = item.zcw
+        cost70_jgqj_down = item.cost70_jgqj_down
+        cost70_jgqj_up = item.cost70_jgqj_up
+        cost70_jzd = item.cost70_jzd
+        cost90_jgqj_down = item.cost90_jgqj_down
+        cost90_jgqj_up = item.cost90_jgqj_up
+        cost90_jzd = item.cost90_jzd
+        popularity = item.popularity
+        total_stock = item.total_stock
+        popularity_desc = item.popularity_desc
+        new_rate = item.new_rate
+        old_rate = item.old_rate
+        old_avg_rate = item.old_avg_rate
+
+        arr.append(
+            [id, cur_date, stock_code, stock_name, cost_avg, close_price, distribution_desc, max_price,
+             min_price, profit_rate, ylw, zcw, cost70_jgqj_down, cost70_jgqj_up, cost70_jzd, cost90_jgqj_down,
+             cost90_jgqj_up, cost90_jzd, popularity, total_stock, popularity_desc, new_rate, old_rate, old_avg_rate])
+
     # 利用二维数组生产pandas数据帧
-    df = pd.DataFrame(arr, columns=['id', 'date', 'name', 'code', 'diff', 'ranking', 'total'])
+    df = pd.DataFrame(arr, columns=['id', 'cur_date', 'stock_code', 'stock_name', 'cost_avg', 'close_price',
+                                    'distribution_desc', 'max_price', 'min_price', 'profit_rate', 'ylw', 'zcw',
+                                    'cost70_jgqj_down', 'cost70_jgqj_up', 'cost70_jzd', 'cost90_jgqj_down',
+                                    'cost90_jgqj_up', 'cost90_jzd', 'popularity', 'total_stock', 'popularity_desc',
+                                    'new_rate', 'old_rate', 'old_avg_rate'])
     print(df)
     # 去除id列
     df = df.drop('id', axis=1)
     # 去除重复项
-    popularity_data = df[-df.duplicated()]
-    print(popularity_data)
-    
+    detail_data = df[-df.duplicated()]
+    print(detail_data)
+
     detail_dir = 'data/detail/{0}'.format(name)
     fu.path_exists(detail_dir)
     detail_file_path = '{0}/{1}{2}.csv'.format(detail_dir, name, date)
 
-    popularity_data.to_csv(detail_file_path)
+    detail_data.to_csv(detail_file_path)
 
-    # session.add_all()
     # 用完记得关闭，也可以用with
     session.close()
