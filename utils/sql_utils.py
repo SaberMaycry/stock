@@ -6,11 +6,10 @@ from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 import pandas as pd  # This is the standard
 from utils import file_utils as fu
-from tbl_jeton import Jetton
-from tbl_popularity import Popularity
-from tbl_stock_data import StockDetail
 
-import plot_stock as ps
+from modle.tbl_jeton import Jetton
+from modle.tbl_popularity import Popularity
+from modle.tbl_stock_data import StockDetail
 
 db_name = 'stock'
 # db_name = 'saber'
@@ -45,7 +44,7 @@ Base.metadata.create_all(engine)
 
 
 def get_clear_popularity_data():
-    # 查询所有热度记录
+    # 查询热度记录
     popularity_list = session.query(Popularity)
 
     # 将热度对象列表，转化为二位数组
@@ -69,7 +68,7 @@ def get_clear_popularity_data():
 
 
 def get_clear_jetton_data(name, date):
-    # 查询所有热度记录
+    # 查询筹码记录
 
     jetton_list = session.query(Jetton).filter(Jetton.name == name, Jetton.date == date)
     # 将热度对象列表，转化为二位数组
@@ -105,13 +104,12 @@ def get_clear_jetton_data(name, date):
     jetton_file_path = 'data/jetton/{0}{1}.csv'.format(name, date)
 
     jetton_data.to_csv(jetton_file_path)
-    # session.add_all()
     # # 用完记得关闭，也可以用with
-    # session.close()
+    session.close()
 
 
 def get_clear_stock_data():
-    # 查询所有热度记录
+    # 查询股票详情记录
     stock_detail_list = session.query(StockDetail)
 
     # 将热度对象列表，转化为二位数组
@@ -132,13 +130,3 @@ def get_clear_stock_data():
     # session.add_all()
     # 用完记得关闭，也可以用with
     session.close()
-
-
-if __name__ == '__main__':
-    # get_clear_popularity_data()
-
-    name = '中通客车'
-    date = '06-03'
-
-    get_clear_jetton_data(name, date)
-    # ps.plot_stock(name, date)

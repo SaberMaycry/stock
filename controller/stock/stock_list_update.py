@@ -2,7 +2,8 @@ from utils import file_utils as fu, tushare_utils as tu
 
 from datetime import datetime
 
-import stock_detail_save_db as sdsd
+from controller.stock import stock_detail_save_db as sdsd
+
 import pandas as pd  # This is the standard
 
 
@@ -15,7 +16,7 @@ def read_csv(name):
 def save_stock_list():
     """更新股票列表"""
     # 设置存放股票列表路径
-    stock_list_path = './/data//'
+    stock_list_path = './/data//stock_list//'
 
     # 判断路径是否存在，否则创建
     fu.path_exists(stock_list_path)

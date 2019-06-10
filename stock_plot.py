@@ -6,12 +6,6 @@ mpl.rcParams['font.sans-serif'] = ['SimHei']  # 指定默认字体：解决plot�
 mpl.rcParams['axes.unicode_minus'] = False  # 解决保存图像是负号'-'显示为方块的问题
 
 
-# file_name = '亚星客车'
-# file_name = '中通客车'
-# file_name = '广和通'
-# file_name = '新国都'
-
-
 def plot_stock(name, date):
     jetton_file_path = 'data/jetton/{0}{1}.csv'.format(name, date)
 
@@ -37,10 +31,3 @@ def plot_stock(name, date):
     plt.title("{0}{1} 筹码分布".format(name, date))
 
     plt.show()
-
-
-if __name__ == '__main__':
-    name = '中通客车'
-    date = '06-03'
-
-    plot_stock(name, date)

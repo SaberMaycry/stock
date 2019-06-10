@@ -1,6 +1,6 @@
 import sys
 
-import stock_list_update as slu
+from controller.stock import stock_list_update as slu
 
 from datetime import datetime
 
@@ -36,5 +36,5 @@ def start_timer_job():
 
 
 if __name__ == '__main__':
-    start_timer_job()
-    # job()
+    # start_timer_job()
+    job()
