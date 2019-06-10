@@ -7,3 +7,4 @@ workspace.xml
 *.pyc
 .idea/vcs.xml
 stock.iml
+.vscode

@@ -7,9 +7,11 @@ mpl.rcParams['axes.unicode_minus'] = False  # 解决保存图像是负号'-'显�
 
 
 def plot_stock(name, date):
-    jetton_file_path = 'data/jetton/{0}{1}.csv'.format(name, date)
+    jetton_file_path = 'data/jetton/{0}/{1}{2}.csv'.format(name, name, date)
 
-    df_jetton = pd.read_csv(jetton_file_path, header=1)
+    print(jetton_file_path)
+    
+    df_jetton = pd.read_csv(open(jetton_file_path,encoding='utf-8'), header=1)
 
     df_jetton.columns = ['id', 'date', 'name', 'code', 'jeton', 'price', 'percentage']
     # print(df_jetton)
