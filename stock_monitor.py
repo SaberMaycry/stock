@@ -146,7 +146,8 @@ def get_mockapi():
     """ 获取api数据 """
     # stockUrl = 'http://www.wanandroid.com/tools/mockapi/4852/stock'
     # httpRes = requests.get(stockUrl).text
-    httpRes = '0.2&监控&sz002714'
+    # httpRes = '0.2&监控&sz002714'
+    httpRes = '0.2&监控&sh600213'
     resList = httpRes.split('&')
     return resList
 
