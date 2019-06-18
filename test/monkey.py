@@ -2,12 +2,11 @@
 import random
 import time
 
-import pyautogui
-from PIL import ImageGrab
-from PIL import Image
-from PIL import ImageOps
-import win32gui
 import numpy as np
+import pyautogui
+import win32gui
+from PIL import Image
+from PIL import ImageGrab
 
 
 def random_num(num):

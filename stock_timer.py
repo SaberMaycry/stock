@@ -36,5 +36,5 @@ def start_timer_job():
 
 
 if __name__ == '__main__':
-    start_timer_job()
-    # job()
+    # start_timer_job()
+    job()
