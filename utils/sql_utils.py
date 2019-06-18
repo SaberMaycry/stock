@@ -49,12 +49,10 @@ def get_clear_popularity_data(name, date):
         arr.append([item.id, item.date, item.name, item.code, item.diff, item.ranking, item.total])
     # 利用二维数组生产pandas数据帧
     df = pd.DataFrame(arr, columns=['id', 'date', 'name', 'code', 'diff', 'ranking', 'total'])
-    print(df)
     # 去除id列
     df = df.drop('id', axis=1)
     # 去除重复项
     popularity_data = df[-df.duplicated()]
-    print(popularity_data)
 
     popularity_dir = 'data/popularity/{0}'.format(name)
     fu.path_exists(popularity_dir)
@@ -63,6 +61,7 @@ def get_clear_popularity_data(name, date):
 
     # 用完记得关闭，也可以用with
     session.close()
+    return popularity_data
 
 
 def get_clear_jetton_data(name, date):
@@ -103,6 +102,8 @@ def get_clear_jetton_data(name, date):
 
     # # 用完记得关闭，也可以用with
     session.close()
+
+    return jetton_data
 
 
 def get_clear_stock_data(name, date):
@@ -148,12 +149,10 @@ def get_clear_stock_data(name, date):
                                     'cost70_jgqj_down', 'cost70_jgqj_up', 'cost70_jzd', 'cost90_jgqj_down',
                                     'cost90_jgqj_up', 'cost90_jzd', 'popularity', 'total_stock', 'popularity_desc',
                                     'new_rate', 'old_rate', 'old_avg_rate'])
-    print(df)
     # 去除id列
     df = df.drop('id', axis=1)
     # 去除重复项
     detail_data = df[-df.duplicated()]
-    print(detail_data)
 
     detail_dir = 'data/detail/{0}'.format(name)
     fu.path_exists(detail_dir)
@@ -163,3 +162,4 @@ def get_clear_stock_data(name, date):
 
     # 用完记得关闭，也可以用with
     session.close()
+    return detail_data

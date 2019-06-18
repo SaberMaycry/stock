@@ -8,6 +8,15 @@ mpl.rcParams['font.sans-serif'] = ['SimHei']  # 指定默认字体：解决plot�
 mpl.rcParams['axes.unicode_minus'] = False  # 解决保存图像是负号'-'显示为方块的问题
 
 
+def plot_data(x_data, y_data, x_label, y_label, title):
+    plt.plot(x_data, y_data)
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+    plt.title(title)
+
+    plt.show()
+
+
 def plot_jetton_stock(name, date):
     jetton_file_path = 'data/jetton/{0}/{1}{2}.csv'.format(name, name, date)
 
