@@ -1,0 +1,6 @@
+import json
+
+jsonData = '{"name":"\u4e9a\u661f\u5ba2\u8f66"}'
+print(jsonData)
+text = json.loads(jsonData)
+print(text)
